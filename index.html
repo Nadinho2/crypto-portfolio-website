@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoVault - Track & Grow Your Crypto Portfolio</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* Temporary styles - move to style.css later */
+    .hero {
+      background: linear-gradient(135deg, #0f0f1e, #1a1a2e);
+      padding: 120px 20px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero h1 {
+      font-size: 3.2rem;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 1.3rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      color: #ccc;
+    }
+    .feature-card {
+      background: #1a1a2e;
+      border-radius: 12px;
+      padding: 30px 25px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-10px);
+    }
+    .coin-preview {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding: 20px 0;
+    }
+    .mini-coin {
+      background: #16213e;
+      padding: 15px 20px;
+      border-radius: 12px;
+      min-width: 180px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo">CryptoVault</div>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="trending.html">Trending Coins</a></li>
+        <li><a href="how-to-buy.html">How to Buy</a></li>
+        <li><a href="where-to-buy.html">Where to Buy</a></li>
+        <li><a href="about.html">About Me</a></li>
+      </ul>
+      <button class="theme-toggle">🌙</button>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="container">
+      <h1>Track, Learn & Grow<br>Your Crypto Portfolio</h1>
+      <p>Real-time market data • Beginner-friendly guides • Trusted insights from Lagos</p>
+      
+      <div style="margin: 40px 0;">
+        <a href="trending.html" class="btn-primary" style="margin-right: 15px;">Explore Trending Coins</a>
+        <a href="how-to-buy.html" class="btn-secondary">How to Buy Crypto</a>
+      </div>
+
+      <p style="font-size: 1rem; color: #888;">Built for Nigerians • Trusted by beginners & traders</p>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="container">
+      <h2 style="text-align: center; margin-bottom: 50px;">Why Choose CryptoVault?</h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+        
+        <div class="feature-card">
+          <h3>📈 Real-Time Trending Coins</h3>
+          <p>Stay updated with the hottest cryptocurrencies and market movers in one place.</p>
+        </div>
+
+        <div class="feature-card">
+          <h3>📚 Simple Buying Guides</h3>
+          <p>Step-by-step tutorials tailored for beginners, especially Nigerians using Naira.</p>
+        </div>
+
+        <div class="feature-card">
+          <h3>🔒 Safety First</h3>
+          <p>Learn how to buy securely, store your crypto safely, and avoid common scams.</p>
+        </div>
+
+        <div class="feature-card">
+          <h3>🇳🇬 Made for Nigerians</h3>
+          <p>Practical advice on P2P trading, local exchanges, and Naira-friendly methods.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TRENDING PREVIEW -->
+  <section class="section" style="background: #111827;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h2>Currently Trending</h2>
+        <a href="trending.html" style="color: #00ff9d; text-decoration: none;">View All Coins →</a>
+      </div>
+
+      <div class="coin-preview">
+        <!-- Sample Trending Coins -->
+        <div class="mini-coin">
+          <div style="font-size: 28px; margin-bottom: 8px;">₿</div>
+          <h4>Bitcoin (BTC)</h4>
+          <p style="margin: 5px 0;">$87,452</p>
+          <p class="positive">+2.84% (24h)</p>
+        </div>
+
+        <div class="mini-coin">
+          <div style="font-size: 28px; margin-bottom: 8px;">⟠</div>
+          <h4>Ethereum (ETH)</h4>
+          <p style="margin: 5px 0;">$3,248</p>
+          <p class="positive">+4.21% (24h)</p>
+        </div>
+
+        <div class="mini-coin">
+          <div style="font-size: 28px; margin-bottom: 8px;">◎</div>
+          <h4>Solana (SOL)</h4>
+          <p style="margin: 5px 0;">$142.85</p>
+          <p class="negative">-1.23% (24h)</p>
+        </div>
+
+        <div class="mini-coin">
+          <div style="font-size: 28px; margin-bottom: 8px;">💎</div>
+          <h4>Ripple (XRP)</h4>
+          <p style="margin: 5px 0;">$2.45</p>
+          <p class="positive">+6.78% (24h)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO START -->
+  <section class="section">
+    <div class="container">
+      <h2 style="text-align: center; margin-bottom: 50px;">Start Your Crypto Journey Today</h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; text-align: center;">
+        
+        <div>
+          <div style="font-size: 50px; margin-bottom: 15px;">1️⃣</div>
+          <h3>Learn the Basics</h3>
+          <p>Read our simple guides on how to buy crypto safely.</p>
+          <a href="how-to-buy.html" class="btn-secondary">How to Buy →</a>
+        </div>
+
+        <div>
+          <div style="font-size: 50px; margin-bottom: 15px;">2️⃣</div>
+          <h3>Find the Best Platform</h3>
+          <p>Compare trusted exchanges and P2P options.</p>
+          <a href="where-to-buy.html" class="btn-secondary">Where to Buy →</a>
+        </div>
+
+        <div>
+          <div style="font-size: 50px; margin-bottom: 15px;">3️⃣</div>
+          <h3>Track the Market</h3>
+          <p>Stay updated with trending coins and prices.</p>
+          <a href="trending.html" class="btn-secondary">View Trending →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT ME TEASER -->
+  <section class="section" style="background: #1a1a2e;">
+    <div class="container">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 50px;">
+        <div style="flex: 1; min-width: 280px;">
+          <h2>Built by Nadinho</h2>
+          <p>
+            Hi, I'm Nadinho from Lagos, Nigeria. 
+            This website was created to help people like you navigate the crypto world with confidence.
+          </p>
+          <p>
+            No hype. Just honest education, practical guides, and real market insights.
+          </p>
+          <a href="about.html" class="btn-primary">Learn More About Me →</a>
+        </div>
+        
+        <div style="flex: 1; min-width: 280px; text-align: center;">
+          <img src="https://via.placeholder.com/400x300/16213e/00ff9d?text=Nadinho" 
+               alt="Nadinho" style="max-width: 100%; border-radius: 12px;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta-section">
+    <div class="container" style="text-align: center;">
+      <h2>Ready to Take Control of Your Financial Future?</h2>
+      <p style="margin: 20px 0 30px;">Start learning and tracking crypto today.</p>
+      <a href="trending.html" class="btn-primary" style="font-size: 1.2rem; padding: 18px 40px;">Explore Trending Coins Now</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 CryptoVault • Built by Nadinho (@NadinhoCrypto)</p>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="#">Disclaimer</a>
+        <a href="about.html">About Me</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
