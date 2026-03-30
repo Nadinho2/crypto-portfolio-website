@@ -29,23 +29,73 @@ body {
   padding: 16px 0;
 }
 
-.navbar .container {
+.navbar .container,
+.navbar-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
+  flex-wrap: nowrap;
 }
 
-.logo a {
+.logo {
   font-size: 1.85rem;
   font-weight: 700;
   color: #00ff9d;
+  flex-shrink: 0;
+}
+
+.logo a {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
   text-decoration: none;
+}
+
+.logo a:hover {
+  opacity: 0.9;
 }
 
 .nav-links {
   display: flex;
   list-style: none;
   gap: 28px;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-wallet-nav {
+  background: #16213e;
+  color: #00ff9d;
+  border: 1px solid #00ff9d;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-wallet-nav:hover {
+  background: rgba(0, 255, 157, 0.12);
+}
+
+.btn-wallet-nav:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
 
 .nav-links a {
@@ -85,9 +135,16 @@ body {
   display: none;
   background: none;
   border: none;
-  font-size: 1.8rem;
+  font-size: 1.75rem;
   color: #ddd;
   cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  line-height: 1;
+}
+
+.mobile-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
 }
 
 /* ====================== HERO ====================== */
@@ -160,6 +217,19 @@ body {
   border-radius: 8px;
   font-size: 0.9rem;
   cursor: pointer;
+}
+
+/* ====================== CTA STRIP ====================== */
+.cta-section {
+  padding: 72px 20px;
+  background: linear-gradient(135deg, #16213e, #0f0f1e);
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #222;
+}
+
+:root[data-theme='light'] .cta-section {
+  background: linear-gradient(135deg, #e8eef5, #dde5f0);
+  border-color: #ddd;
 }
 
 /* ====================== SECTIONS ====================== */
@@ -244,22 +314,500 @@ footer {
   margin: 40px 0;
 }
 
+/* ====================== LIVE PRICES / HOME PREVIEW ====================== */
+.trending-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.trending-toolbar h2 {
+  margin: 0;
+}
+
+.trending-meta,
+.home-prices-meta {
+  font-size: 0.9rem;
+  color: #888;
+  margin: 8px 0 0;
+}
+
+.toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #16213e;
+  color: #00ff9d;
+  border: 1px solid #333;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.btn-refresh:hover:not(:disabled) {
+  border-color: #00ff9d;
+  background: #1c2a4a;
+}
+
+.btn-refresh:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.btn-refresh.is-loading .refresh-icon {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.coin-preview {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding: 20px 0 8px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mini-coin {
+  background: #16213e;
+  padding: 16px 18px;
+  border-radius: 12px;
+  min-width: min(200px, 85vw);
+  max-width: 220px;
+  text-align: center;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  border: 1px solid #2a2a40;
+}
+
+.mini-coin-icon {
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 36px;
+}
+
+.coin-logo-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.coin-logo-img.sm {
+  width: 28px;
+  height: 28px;
+}
+
+.coin-logo-fallback {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #00ff9d;
+}
+
+.coin-logo-fallback.sm {
+  width: 28px;
+  height: 28px;
+  font-size: 0.85rem;
+}
+
+.mini-coin h4 {
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.price-error,
+.price-error-cell {
+  color: #ff8888;
+  padding: 16px;
+  text-align: center;
+}
+
+.coin-sym {
+  color: #666;
+  font-weight: 400;
+  font-size: 0.9em;
+}
+
+.coin-logo-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.btn-small-link {
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+/* ====================== WALLET PANEL ====================== */
+.portfolio-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.portfolio-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.portfolio-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(100%, 400px);
+  max-width: 100%;
+  height: 100%;
+  height: 100dvh;
+  background: #12121f;
+  border-left: 1px solid #2a2a40;
+  z-index: 10001;
+  padding: 20px 20px 32px;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.4);
+}
+
+.portfolio-panel.open {
+  transform: translateX(0);
+}
+
+body.portfolio-open {
+  overflow: hidden;
+}
+
+.portfolio-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.portfolio-panel-head h2 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.icon-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.portfolio-address {
+  font-size: 0.8rem;
+  word-break: break-all;
+  color: #888;
+  margin-bottom: 16px;
+}
+
+.portfolio-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.btn-compact {
+  padding: 10px 16px;
+  font-size: 0.9rem;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #aaa;
+  border: 1px solid #444;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  color: #fff;
+  border-color: #666;
+}
+
+.portfolio-content {
+  font-size: 0.95rem;
+}
+
+.portfolio-section {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #2a2a40;
+}
+
+.portfolio-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.portfolio-value {
+  font-size: 1.05rem;
+}
+
+.portfolio-usd {
+  color: #00ff9d;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.portfolio-loading {
+  color: #888;
+}
+
+.muted {
+  color: #777;
+}
+
+.muted.small {
+  font-size: 0.85rem;
+}
+
+.token-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.token-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #222;
+}
+
+.portfolio-disclaimer {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 24px;
+  line-height: 1.5;
+}
+
+.mono {
+  font-family: ui-monospace, monospace;
+}
+
+/* ====================== TABLES (MOBILE) ====================== */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -12px;
+  padding: 0 12px;
+}
+
+.coin-table {
+  min-width: 720px;
+}
+
+@media (max-width: 768px) {
+  .table-scroll {
+    margin: 0 -16px;
+    padding: 0 16px;
+  }
+
+  .coin-table {
+    min-width: 0;
+  }
+
+  .coin-table,
+  .coin-table thead,
+  .coin-table tbody,
+  .coin-table th,
+  .coin-table td,
+  .coin-table tr {
+    display: block;
+  }
+
+  .coin-table thead {
+    display: none;
+  }
+
+  .coin-table tr.coin-row {
+    margin-bottom: 16px;
+    padding: 16px;
+    background: #1a1a2e;
+    border-radius: 12px;
+    border: 1px solid #2a2a40;
+  }
+
+  .coin-table td {
+    border: none;
+    padding: 8px 0;
+    text-align: right;
+    position: relative;
+    padding-left: 42%;
+  }
+
+  .coin-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 40%;
+    text-align: left;
+    color: #888;
+    font-size: 0.8rem;
+  }
+
+  .coin-table td[data-label=''] {
+    padding-left: 0;
+    text-align: left;
+  }
+
+  .coin-table td[data-label='']::before {
+    display: none;
+  }
+
+  .coin-table .coin-name {
+    justify-content: flex-end;
+  }
+}
+
+/* ====================== LIGHT THEME ====================== */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='light'] body {
+  background: #f4f6f8;
+  color: #1a1a2e;
+}
+
+:root[data-theme='light'] .navbar {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom-color: #e0e0e0;
+}
+
+:root[data-theme='light'] .nav-links a {
+  color: #444;
+}
+
+:root[data-theme='light'] .logo,
+:root[data-theme='light'] .logo a {
+  color: #00a86b;
+}
+
+:root[data-theme='light'] .feature-card,
+:root[data-theme='light'] .mini-coin,
+:root[data-theme='light'] .platform-card {
+  background: #fff;
+  border-color: #e8e8e8;
+  color: #222;
+}
+
+:root[data-theme='light'] .hero {
+  background: linear-gradient(135deg, #eef2f7, #e2e8f0);
+}
+
+:root[data-theme='light'] .hero h1 {
+  color: #111;
+}
+
+:root[data-theme='light'] .portfolio-panel {
+  background: #fff;
+  border-left-color: #e0e0e0;
+  color: #222;
+}
+
+:root[data-theme='light'] .coin-table tr.coin-row {
+  background: #fff;
+  border-color: #e8e8e8;
+}
+
+:root[data-theme='light'] .coin-table td::before {
+  color: #666;
+}
+
+/* ====================== HERO CTA (MOBILE) ====================== */
+.hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.hero-cta-row .btn-primary,
+.hero-cta-row .btn-secondary {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ====================== RESPONSIVE DESIGN ====================== */
 @media (max-width: 768px) {
   .nav-links {
     position: fixed;
-    top: 76px;
+    top: 72px;
     left: -100%;
     width: 100%;
-    height: calc(100vh - 76px);
+    height: calc(100vh - 72px);
+    height: calc(100dvh - 72px);
     background: #0a0a14;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding-top: 60px;
-    gap: 30px;
-    transition: 0.4s ease;
+    padding-top: 48px;
+    gap: 24px;
+    transition: 0.35s ease;
     z-index: 999;
+    flex: none;
+    justify-content: flex-start;
+  }
+
+  :root[data-theme='light'] .nav-links {
+    background: #fff;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
   }
 
   .nav-links.active {
@@ -271,11 +819,32 @@ footer {
   }
 
   .hero h1 {
-    font-size: 2.4rem;
+    font-size: clamp(1.75rem, 6vw, 2.4rem);
   }
 
   .hero p {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+  }
+
+  .section {
+    padding: 56px 0;
+  }
+
+  .btn-wallet-nav {
+    max-width: 120px;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 20px;
+  }
+
+  .footer-links a {
+    margin: 0;
   }
 }
 

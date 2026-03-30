@@ -6,214 +6,127 @@
   <title>Trending Coins - CryptoVault</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
-    /* Temporary styles - move to style.css later */
-    .coin-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #1a1a2e;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .coin-table th {
-      background: #16213e;
-      padding: 18px 15px;
-      text-align: left;
-      font-weight: 600;
-      color: #00ff9d;
-    }
-    .coin-table td {
-      padding: 16px 15px;
-      border-bottom: 1px solid #333;
-    }
-    .coin-row:hover {
-      background: #25253a;
-    }
-    .coin-name {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 600;
-    }
-    .coin-logo {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-    .positive {
-      color: #00ff9d;
-    }
-    .negative {
-      color: #ff4d4d;
-    }
     .search-filter {
       display: flex;
-      gap: 15px;
+      gap: 12px;
       margin-bottom: 25px;
       flex-wrap: wrap;
+      align-items: center;
+    }
+    .search-filter input {
+      flex: 1;
+      min-width: min(100%, 220px);
+      padding: 12px 18px;
+      border-radius: 30px;
+      background: #16213e;
+      border: 1px solid #2a2a40;
+      color: white;
+      font-size: 1rem;
     }
     .filter-btn {
-      padding: 8px 18px;
+      padding: 10px 18px;
       background: #16213e;
-      border: none;
+      border: 1px solid #333;
       border-radius: 30px;
       cursor: pointer;
       transition: all 0.3s;
+      color: #ccc;
+      font-size: 0.95rem;
     }
     .filter-btn.active {
       background: #00ff9d;
       color: #000;
       font-weight: bold;
+      border-color: #00ff9d;
+    }
+    :root[data-theme='light'] .search-filter input {
+      background: #fff;
+      border-color: #ddd;
+      color: #111;
+    }
+    :root[data-theme='light'] .filter-btn {
+      background: #eef2f7;
+      color: #333;
+      border-color: #ddd;
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="container">
-      <div class="logo">CryptoVault</div>
+    <div class="container navbar-inner">
+      <div class="logo"><a href="index.html">CryptoVault</a></div>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="trending.html" class="active">Trending Coins</a></li>
+        <li><a href="trending.html">Trending Coins</a></li>
         <li><a href="how-to-buy.html">How to Buy</a></li>
         <li><a href="where-to-buy.html">Where to Buy</a></li>
         <li><a href="about.html">About Me</a></li>
       </ul>
-      <button class="theme-toggle">🌙</button>
+      <div class="nav-actions">
+        <button type="button" class="btn-wallet-nav">Connect wallet</button>
+        <button type="button" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <button type="button" class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">☰</button>
+      </div>
     </div>
   </nav>
 
-  <!-- HERO SECTION -->
   <section class="hero hero-small">
     <div class="container">
       <h1>Trending Cryptocurrencies</h1>
-      <p>Real-time prices • 24h changes • Market movers (Updated: March 2026)</p>
+      <p id="trendingMeta">Loading live data from CoinGecko…</p>
     </div>
   </section>
 
   <div class="container main-content">
 
-    <!-- SEARCH & FILTER -->
-    <div class="search-filter">
-      <input type="text" id="searchInput" placeholder="Search coin name or symbol..." 
-             style="flex: 1; padding: 12px 20px; border-radius: 30px; background: #16213e; border: none; color: white;">
-      
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="gainers">Top Gainers</button>
-      <button class="filter-btn" data-filter="losers">Top Losers</button>
+    <div class="trending-toolbar" style="margin-bottom: 8px;">
+      <h2 style="margin:0;font-size:1.25rem;">Market table</h2>
+      <div class="toolbar-actions">
+        <button type="button" class="btn-refresh" id="refreshPricesBtn" title="Reload from CoinGecko">
+          <span class="refresh-icon" aria-hidden="true">↻</span> Refresh prices
+        </button>
+      </div>
     </div>
 
-    <!-- COINS TABLE -->
-    <table class="coin-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Coin</th>
-          <th>Price</th>
-          <th>24h Change</th>
-          <th>7d Change</th>
-          <th>Market Cap</th>
-          <th>Volume (24h)</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="coinTableBody">
-        <!-- Data will be populated here (you can make it static or dynamic later) -->
-        
-        <!-- Sample Row 1 -->
-        <tr class="coin-row">
-          <td>1</td>
-          <td>
-            <div class="coin-name">
-              <span class="coin-logo">₿</span>
-              Bitcoin
-              <span style="color:#666; font-weight:400;">BTC</span>
-            </div>
-          </td>
-          <td>$87,450.32</td>
-          <td class="positive">+2.84%</td>
-          <td class="positive">+8.12%</td>
-          <td>$1.73T</td>
-          <td>$48.2B</td>
-          <td><button class="btn-small">Add to Portfolio</button></td>
-        </tr>
+    <div class="search-filter">
+      <input type="search" id="searchInput" placeholder="Search name or symbol…" autocomplete="off" enterkeyhint="search">
 
-        <!-- Sample Row 2 -->
-        <tr class="coin-row">
-          <td>2</td>
-          <td>
-            <div class="coin-name">
-              <span class="coin-logo">⟠</span>
-              Ethereum
-              <span style="color:#666; font-weight:400;">ETH</span>
-            </div>
-          </td>
-          <td>$3,245.67</td>
-          <td class="positive">+4.21%</td>
-          <td class="negative">-1.45%</td>
-          <td>$390.8B</td>
-          <td>$28.9B</td>
-          <td><button class="btn-small">Add to Portfolio</button></td>
-        </tr>
+      <button type="button" class="filter-btn active" data-filter="all">All</button>
+      <button type="button" class="filter-btn" data-filter="gainers">Top gainers</button>
+      <button type="button" class="filter-btn" data-filter="losers">Top losers</button>
+    </div>
 
-        <!-- Sample Row 3 -->
-        <tr class="coin-row">
-          <td>3</td>
-          <td>
-            <div class="coin-name">
-              <span class="coin-logo">◎</span>
-              Solana
-              <span style="color:#666; font-weight:400;">SOL</span>
-            </div>
-          </td>
-          <td>$142.85</td>
-          <td class="negative">-1.23%</td>
-          <td class="positive">+15.67%</td>
-          <td>$66.4B</td>
-          <td>$5.1B</td>
-          <td><button class="btn-small">Add to Portfolio</button></td>
-        </tr>
-
-        <!-- Sample Row 4 -->
-        <tr class="coin-row">
-          <td>4</td>
-          <td>
-            <div class="coin-name">
-              <span class="coin-logo">💎</span>
-              Ripple
-              <span style="color:#666; font-weight:400;">XRP</span>
-            </div>
-          </td>
-          <td>$2.45</td>
-          <td class="positive">+6.78%</td>
-          <td class="positive">+12.34%</td>
-          <td>$138.2B</td>
-          <td>$4.8B</td>
-          <td><button class="btn-small">Add to Portfolio</button></td>
-        </tr>
-
-        <!-- Add more rows as needed -->
-      </tbody>
-    </table>
+    <div class="table-scroll">
+      <table class="coin-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Coin</th>
+            <th>Price</th>
+            <th>24h</th>
+            <th>7d</th>
+            <th>Market cap</th>
+            <th>Volume (24h)</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="coinTableBody" aria-live="polite">
+          <tr><td colspan="8" class="price-error-cell">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <div style="text-align: center; margin: 40px 0;">
-      <button class="btn-primary">Load More Coins</button>
+      <button type="button" class="btn-primary" id="loadMoreCoinsBtn">Load more (top by market cap)</button>
     </div>
 
-    <!-- Disclaimer -->
     <div class="warning-box" style="margin-top: 50px;">
-      <p><strong>Note:</strong> Cryptocurrency prices are highly volatile. This data is for educational purposes only. 
-      Always do your own research before investing.</p>
+      <p><strong>Note:</strong> Prices come from CoinGecko and can lag or rate-limit. Cryptocurrency markets are volatile—this is for education only. Do your own research.</p>
     </div>
 
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <div class="container">
       <p>&copy; 2026 CryptoVault. All Rights Reserved.</p>
@@ -224,6 +137,7 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js" crossorigin="anonymous"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

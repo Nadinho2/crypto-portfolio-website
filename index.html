@@ -6,75 +6,48 @@
   <title>CryptoVault - Track & Grow Your Crypto Portfolio</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
-    /* Temporary styles - move to style.css later */
-    .hero {
+    .hero-index {
       background: linear-gradient(135deg, #0f0f1e, #1a1a2e);
-      padding: 120px 20px 80px;
+      padding: clamp(72px, 12vw, 120px) 20px clamp(56px, 8vw, 80px);
       text-align: center;
       position: relative;
       overflow: hidden;
     }
-    .hero h1 {
-      font-size: 3.2rem;
-      line-height: 1.2;
-      margin-bottom: 20px;
-    }
-    .hero p {
-      font-size: 1.3rem;
-      max-width: 700px;
-      margin: 0 auto 30px;
-      color: #ccc;
-    }
     .feature-card {
-      background: #1a1a2e;
-      border-radius: 12px;
-      padding: 30px 25px;
-      text-align: center;
       transition: transform 0.3s ease;
     }
     .feature-card:hover {
       transform: translateY(-10px);
     }
-    .coin-preview {
-      display: flex;
-      gap: 15px;
-      overflow-x: auto;
-      padding: 20px 0;
-    }
-    .mini-coin {
-      background: #16213e;
-      padding: 15px 20px;
-      border-radius: 12px;
-      min-width: 180px;
-      text-align: center;
-    }
   </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="container">
-      <div class="logo">CryptoVault</div>
+    <div class="container navbar-inner">
+      <div class="logo"><a href="index.html">CryptoVault</a></div>
       <ul class="nav-links">
-        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="trending.html">Trending Coins</a></li>
         <li><a href="how-to-buy.html">How to Buy</a></li>
         <li><a href="where-to-buy.html">Where to Buy</a></li>
         <li><a href="about.html">About Me</a></li>
       </ul>
-      <button class="theme-toggle">🌙</button>
+      <div class="nav-actions">
+        <button type="button" class="btn-wallet-nav">Connect wallet</button>
+        <button type="button" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <button type="button" class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">☰</button>
+      </div>
     </div>
   </nav>
 
-  <!-- HERO SECTION -->
-  <section class="hero">
+  <section class="hero hero-index">
     <div class="container">
       <h1>Track, Learn & Grow<br>Your Crypto Portfolio</h1>
-      <p>Real-time market data • Beginner-friendly guides • Trusted insights from Lagos</p>
-      
-      <div style="margin: 40px 0;">
-        <a href="trending.html" class="btn-primary" style="margin-right: 15px;">Explore Trending Coins</a>
+      <p>Live CoinGecko prices • Wallet view • Guides from Lagos</p>
+
+      <div class="hero-cta-row">
+        <a href="trending.html" class="btn-primary">Explore Trending Coins</a>
         <a href="how-to-buy.html" class="btn-secondary">How to Buy Crypto</a>
       </div>
 
@@ -82,29 +55,28 @@
     </div>
   </section>
 
-  <!-- FEATURES -->
   <section class="section">
     <div class="container">
       <h2 style="text-align: center; margin-bottom: 50px;">Why Choose CryptoVault?</h2>
-      
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-        
-        <div class="feature-card">
-          <h3>📈 Real-Time Trending Coins</h3>
-          <p>Stay updated with the hottest cryptocurrencies and market movers in one place.</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 24px;">
+
+        <div class="feature-card" style="text-align: center; padding: 30px 25px;">
+          <h3>📈 Live market data</h3>
+          <p>Trending coins and prices powered by CoinGecko—refresh anytime.</p>
         </div>
 
-        <div class="feature-card">
-          <h3>📚 Simple Buying Guides</h3>
+        <div class="feature-card" style="text-align: center; padding: 30px 25px;">
+          <h3>👛 Wallet portfolio</h3>
+          <p>Connect MetaMask (or any injected wallet) to see balances and USD estimates.</p>
+        </div>
+
+        <div class="feature-card" style="text-align: center; padding: 30px 25px;">
+          <h3>📚 Simple buying guides</h3>
           <p>Step-by-step tutorials tailored for beginners, especially Nigerians using Naira.</p>
         </div>
 
-        <div class="feature-card">
-          <h3>🔒 Safety First</h3>
-          <p>Learn how to buy securely, store your crypto safely, and avoid common scams.</p>
-        </div>
-
-        <div class="feature-card">
+        <div class="feature-card" style="text-align: center; padding: 30px 25px;">
           <h3>🇳🇬 Made for Nigerians</h3>
           <p>Practical advice on P2P trading, local exchanges, and Naira-friendly methods.</p>
         </div>
@@ -113,54 +85,33 @@
     </div>
   </section>
 
-  <!-- TRENDING PREVIEW -->
   <section class="section" style="background: #111827;">
     <div class="container">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-        <h2>Currently Trending</h2>
-        <a href="trending.html" style="color: #00ff9d; text-decoration: none;">View All Coins →</a>
+      <div class="trending-toolbar">
+        <div>
+          <h2>Currently trending</h2>
+          <p id="homePricesUpdated" class="home-prices-meta" aria-live="polite"></p>
+        </div>
+        <div class="toolbar-actions">
+          <button type="button" class="btn-refresh" id="homeRefreshBtn" title="Reload prices from CoinGecko">
+            <span class="refresh-icon" aria-hidden="true">↻</span> Refresh
+          </button>
+          <a href="trending.html" style="color: #00ff9d; text-decoration: none; font-weight: 600;">View all →</a>
+        </div>
       </div>
 
-      <div class="coin-preview">
-        <!-- Sample Trending Coins -->
-        <div class="mini-coin">
-          <div style="font-size: 28px; margin-bottom: 8px;">₿</div>
-          <h4>Bitcoin (BTC)</h4>
-          <p style="margin: 5px 0;">$87,452</p>
-          <p class="positive">+2.84% (24h)</p>
-        </div>
-
-        <div class="mini-coin">
-          <div style="font-size: 28px; margin-bottom: 8px;">⟠</div>
-          <h4>Ethereum (ETH)</h4>
-          <p style="margin: 5px 0;">$3,248</p>
-          <p class="positive">+4.21% (24h)</p>
-        </div>
-
-        <div class="mini-coin">
-          <div style="font-size: 28px; margin-bottom: 8px;">◎</div>
-          <h4>Solana (SOL)</h4>
-          <p style="margin: 5px 0;">$142.85</p>
-          <p class="negative">-1.23% (24h)</p>
-        </div>
-
-        <div class="mini-coin">
-          <div style="font-size: 28px; margin-bottom: 8px;">💎</div>
-          <h4>Ripple (XRP)</h4>
-          <p style="margin: 5px 0;">$2.45</p>
-          <p class="positive">+6.78% (24h)</p>
-        </div>
+      <div class="coin-preview" id="homeTrendingPreview" aria-live="polite" aria-busy="true">
+        <p class="price-error" style="min-width:100%;text-align:center;">Loading prices…</p>
       </div>
     </div>
   </section>
 
-  <!-- HOW TO START -->
   <section class="section">
     <div class="container">
       <h2 style="text-align: center; margin-bottom: 50px;">Start Your Crypto Journey Today</h2>
-      
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; text-align: center;">
-        
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 28px; text-align: center;">
+
         <div>
           <div style="font-size: 50px; margin-bottom: 15px;">1️⃣</div>
           <h3>Learn the Basics</h3>
@@ -178,7 +129,7 @@
         <div>
           <div style="font-size: 50px; margin-bottom: 15px;">3️⃣</div>
           <h3>Track the Market</h3>
-          <p>Stay updated with trending coins and prices.</p>
+          <p>Live trending list and wallet view in one place.</p>
           <a href="trending.html" class="btn-secondary">View Trending →</a>
         </div>
 
@@ -186,14 +137,13 @@
     </div>
   </section>
 
-  <!-- ABOUT ME TEASER -->
   <section class="section" style="background: #1a1a2e;">
     <div class="container">
-      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 50px;">
-        <div style="flex: 1; min-width: 280px;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 40px;">
+        <div style="flex: 1; min-width: min(100%, 280px);">
           <h2>Built by Nadinho</h2>
           <p>
-            Hi, I'm Nadinho from Lagos, Nigeria. 
+            Hi, I'm Nadinho from Lagos, Nigeria.
             This website was created to help people like you navigate the crypto world with confidence.
           </p>
           <p>
@@ -201,25 +151,23 @@
           </p>
           <a href="about.html" class="btn-primary">Learn More About Me →</a>
         </div>
-        
-        <div style="flex: 1; min-width: 280px; text-align: center;">
-          <img src="https://via.placeholder.com/400x300/16213e/00ff9d?text=Nadinho" 
-               alt="Nadinho" style="max-width: 100%; border-radius: 12px;">
+
+        <div style="flex: 1; min-width: min(100%, 280px); text-align: center;">
+          <img src="https://via.placeholder.com/400x300/16213e/00ff9d?text=Nadinho"
+               alt="Nadinho" style="max-width: 100%; border-radius: 12px; height: auto;">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FINAL CTA -->
   <section class="cta-section">
     <div class="container" style="text-align: center;">
       <h2>Ready to Take Control of Your Financial Future?</h2>
       <p style="margin: 20px 0 30px;">Start learning and tracking crypto today.</p>
-      <a href="trending.html" class="btn-primary" style="font-size: 1.2rem; padding: 18px 40px;">Explore Trending Coins Now</a>
+      <a href="trending.html" class="btn-primary" style="font-size: 1.1rem; padding: 16px 36px;">Explore Trending Coins Now</a>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <div class="container">
       <p>&copy; 2026 CryptoVault • Built by Nadinho (@NadinhoCrypto)</p>
@@ -231,6 +179,7 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js" crossorigin="anonymous"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

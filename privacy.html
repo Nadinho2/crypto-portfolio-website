@@ -39,10 +39,9 @@
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="container">
-      <div class="logo">CryptoVault</div>
+    <div class="container navbar-inner">
+      <div class="logo"><a href="index.html">CryptoVault</a></div>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="trending.html">Trending Coins</a></li>
@@ -50,7 +49,11 @@
         <li><a href="where-to-buy.html">Where to Buy</a></li>
         <li><a href="about.html">About Me</a></li>
       </ul>
-      <button class="theme-toggle">🌙</button>
+      <div class="nav-actions">
+        <button type="button" class="btn-wallet-nav">Connect wallet</button>
+        <button type="button" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <button type="button" class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">☰</button>
+      </div>
     </div>
   </nav>
 
@@ -155,6 +158,7 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js" crossorigin="anonymous"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
